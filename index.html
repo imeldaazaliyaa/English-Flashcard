@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kartu Kata — IELTS</title>
+<meta name="theme-color" content="#F6F3FB">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F3FB; --surface:#FFFFFF; --ink:#2E2A3D; --muted:#6F6885; --line:#E4DDF2;
+  --lav:#B9A8E8; --lav-soft:#ECE6FA; --pink:#F4B6C8; --pink-soft:#FCE8EF;
+  --mint:#A8DCC7; --mint-soft:#E3F4EC; --butter:#F7E3A1; --butter-soft:#FDF6DD;
+  --sky:#AFD3F0; --sky-soft:#E6F1FB; --focus:#7B62D6;
+  --display:"Bricolage Grotesque", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#1E1B2A; --surface:#2A2639; --ink:#F1EEF9; --muted:#B3ABCB; --line:#3B3550;
+    --lav-soft:#3A3257; --pink-soft:#4A2E3A; --mint-soft:#27423A; --butter-soft:#4A4228; --sky-soft:#283C50;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:10px}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px 96px}
+
+/* header */
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:8px 0 20px}
+h1{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;margin:0;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:15px;margin:6px 0 0}
+.streak{display:flex;align-items:center;gap:6px;background:var(--butter-soft);border:1.5px solid var(--butter);padding:6px 12px;border-radius:999px;font-weight:700;font-size:15px;white-space:nowrap}
+
+/* tabs */
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1.5px solid var(--line);z-index:10;padding-bottom:env(safe-area-inset-bottom)}
+nav .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+nav button{background:none;border:0;padding:10px 4px 12px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;color:var(--muted);cursor:pointer}
+nav button .ic{font-size:21px;line-height:1}
+nav button[aria-current="page"]{color:var(--ink);font-weight:700}
+nav button[aria-current="page"] .ic{transform:translateY(-1px)}
+
+section[hidden]{display:none}
+
+/* progress */
+.today{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.pill{border-radius:16px;padding:10px 12px;border:1.5px solid}
+.pill b{display:block;font-family:var(--display);font-size:26px;line-height:1.1}
+.pill span{font-size:13px;color:var(--muted)}
+.p-new{background:var(--sky-soft);border-color:var(--sky)}
+.p-learn{background:var(--pink-soft);border-color:var(--pink)}
+.p-rev{background:var(--mint-soft);border-color:var(--mint)}
+
+/* card */
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:28px;padding:34px 24px 26px;min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;cursor:pointer;user-select:none}
+.card.state-new{box-shadow:0 0 0 6px var(--sky-soft)}
+.card.state-learning{box-shadow:0 0 0 6px var(--pink-soft)}
+.card.state-review{box-shadow:0 0 0 6px var(--mint-soft)}
+.tag{position:absolute;top:16px;left:18px;font-size:13px;color:var(--muted)}
+.speak{position:absolute;top:10px;right:12px;background:var(--lav-soft);border:0;border-radius:999px;width:42px;height:42px;font-size:19px;cursor:pointer}
+.word{font-family:var(--display);font-weight:700;font-size:clamp(38px,9vw,56px);line-height:1.05;letter-spacing:-.025em;margin:8px 0;overflow-wrap:anywhere}
+.hint{color:var(--muted);font-size:15px;margin-top:14px}
+.back{width:100%;margin-top:18px;padding-top:18px;border-top:1.5px dashed var(--line)}
+.meaning{font-size:22px;font-weight:700;margin:0 0 10px}
+.example{font-style:italic;color:var(--muted);margin:0;max-width:46ch;margin-inline:auto}
+.flip-in{animation:flip .28s ease-out}
+@keyframes flip{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.flip-in{animation:none}}
+
+.rate{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+.rate button{border:1.5px solid;border-radius:18px;padding:10px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;font-weight:700;font-size:15px}
+.rate small{font-weight:400;font-size:12px;color:var(--muted)}
+.r1{background:var(--pink-soft);border-color:var(--pink)}
+.r2{background:var(--butter-soft);border-color:var(--butter)}
+.r3{background:var(--mint-soft);border-color:var(--mint)}
+.r4{background:var(--sky-soft);border-color:var(--sky)}
+.showbtn{margin-top:16px;width:100%}
+
+.btn{background:var(--ink);color:var(--bg);border:0;border-radius:16px;padding:13px 18px;font-weight:700;cursor:pointer}
+.btn.soft{background:var(--lav-soft);color:var(--ink)}
+.btn.ghost{background:none;border:1.5px solid var(--line);color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+.done{text-align:center;padding:40px 20px;background:var(--surface);border:1.5px solid var(--line);border-radius:28px}
+.done .big{font-size:54px;line-height:1}
+.done h2{font-family:var(--display);font-size:28px;margin:12px 0 6px}
+.done p{color:var(--muted);margin:0 0 18px}
+
+/* forms */
+h2.sec{font-family:var(--display);font-size:24px;margin:4px 0 4px}
+p.lead{color:var(--muted);margin:0 0 16px}
+label{display:block;font-weight:700;font-size:15px;margin:14px 0 6px}
+input[type=text],input[type=number],input[type=search],textarea,select{width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px}
+textarea{min-height:150px;resize:vertical;font-size:15px;line-height:1.5}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.note{font-size:14px;color:var(--muted);margin-top:8px}
+.box{background:var(--surface);border:1.5px solid var(--line);border-radius:22px;padding:18px;margin-bottom:16px}
+.box.lav{background:var(--lav-soft);border-color:var(--lav)}
+pre.prompt{white-space:pre-wrap;background:var(--surface);border:1.5px dashed var(--lav);border-radius:14px;padding:12px;font-size:14px;margin:10px 0 0}
+
+/* list */
+.list{list-style:none;margin:12px 0 0;padding:0}
+.list li{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.list .w{font-family:var(--display);font-weight:700;font-size:19px}
+.list .m{font-size:14px;color:var(--muted)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.d-new{background:var(--sky)} .d-learning{background:var(--pink)} .d-review{background:var(--mint)} .d-master{background:var(--lav)}
+.list .acts{display:flex;gap:6px;flex-shrink:0}
+.list .acts button{background:var(--lav-soft);border:0;border-radius:10px;padding:6px 10px;cursor:pointer;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}
+.stats div{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:10px 14px}
+.stats b{font-family:var(--display);font-size:24px;display:block}
+.stats span{font-size:13px;color:var(--muted)}
+
+.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:15px;z-index:20;max-width:90vw;text-align:center}
+.toast[hidden]{display:none}
+.kbd{font-size:13px;color:var(--muted);text-align:center;margin-top:12px}
+@media (max-width:420px){ .rate button{font-size:14px} h1{font-size:30px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Kartu Kata</h1>
+      <p class="sub">Kosakata akademik menuju IELTS 7.0</p>
+    </div>
+    <div class="streak" id="streak" title="Hari berturut-turut belajar">🔥 <span>0 hari</span></div>
+  </header>
+
+  <!-- BELAJAR -->
+  <section id="tab-study">
+    <div class="today">
+      <div class="pill p-new"><b id="c-new">0</b><span>Kata baru</span></div>
+      <div class="pill p-learn"><b id="c-learn">0</b><span>Sedang dihafal</span></div>
+      <div class="pill p-rev"><b id="c-rev">0</b><span>Diulang hari ini</span></div>
+    </div>
+    <div id="study-area"></div>
+  </section>
+
+  <!-- TAMBAH -->
+  <section id="tab-add" hidden>
+    <h2 class="sec">Tambah kata</h2>
+    <p class="lead">Satu per satu, atau tempel banyak sekaligus dari AI.</p>
+
+    <div class="box">
+      <form id="add-form">
+        <label for="f-word">Kata / frasa (Inggris)</label>
+        <input id="f-word" type="text" required autocomplete="off" placeholder="contoh: significant">
+        <label for="f-mean">Arti (Indonesia)</label>
+        <input id="f-mean" type="text" required autocomplete="off" placeholder="penting, berarti">
+        <label for="f-ex">Contoh kalimat</label>
+        <input id="f-ex" type="text" autocomplete="off" placeholder="The study found a significant increase.">
+        <div class="row"><button class="btn" type="submit">Simpan kata</button></div>
+      </form>
+    </div>
+
+    <div class="box lav">
+      <h2 class="sec" style="font-size:20px">Tempel banyak kata sekaligus</h2>
+      <p class="note" style="margin-top:0">Satu kata per baris, format <b>kata;arti;contoh kalimat</b>. Kata yang sudah ada akan dilewati.</p>
+      <textarea id="bulk" placeholder="significant;penting, berarti;The study found a significant increase in sales.&#10;assess;menilai;Teachers assess students' progress every term."></textarea>
+      <div class="row">
+        <button class="btn" id="bulk-add" type="button">Tambahkan semua</button>
+        <label class="btn ghost" style="margin:0;font-weight:700;display:inline-flex;align-items:center">Pilih file .txt/.csv<input id="bulk-file" type="file" accept=".txt,.csv,text/plain" hidden></label>
+      </div>
+      <p class="note">Minta AI membuatkan daftarnya dengan prompt ini, lalu tempel hasilnya di kotak atas:</p>
+      <pre class="prompt" id="prompt-text">From the text below, extract 15 academic words useful for IELTS. Output one per line in this exact format: word;meaning in Indonesian;example sentence in English. No header, no numbering, no extra text.
+
+[tempel teks bacaan di sini]</pre>
+      <div class="row"><button class="btn soft" id="copy-prompt" type="button">Salin prompt</button></div>
+    </div>
+  </section>
+
+  <!-- KARTU -->
+  <section id="tab-cards" hidden>
+    <h2 class="sec">Semua kata</h2>
+    <div class="stats" id="stats"></div>
+    <input type="search" id="search" placeholder="Cari kata atau arti…" aria-label="Cari kata">
+    <p class="note"><span class="dot d-new"></span>baru <span class="dot d-learning" style="margin-left:10px"></span>dihafal <span class="dot d-review" style="margin-left:10px"></span>diulang <span class="dot d-master" style="margin-left:10px"></span>dikuasai (≥ 21 hari)</p>
+    <ul class="list" id="list"></ul>
+  </section>
+
+  <!-- PENGATURAN -->
+  <section id="tab-settings" hidden>
+    <h2 class="sec">Pengaturan</h2>
+    <div class="box">
+      <label for="s-new">Kata baru per hari</label>
+      <input id="s-new" type="number" min="1" max="100" value="15">
+      <label for="s-voice">Aksen suara</label>
+      <select id="s-voice">
+        <option value="en-GB">Inggris (British)</option>
+        <option value="en-US">Amerika</option>
+        <option value="en-AU">Australia</option>
+      </select>
+      <div class="row"><button class="btn" id="save-settings" type="button">Simpan pengaturan</button></div>
+    </div>
+
+    <div class="box lav">
+      <h2 class="sec" style="font-size:20px">Cadangan & pindah perangkat</h2>
+      <p class="note" style="margin-top:0">Data tersimpan di browser ini saja. Untuk pindah dari laptop ke HP (atau sebaliknya), unduh cadangan di sini lalu pulihkan di perangkat lain. Biasakan unduh cadangan seminggu sekali.</p>
+      <div class="row">
+        <button class="btn" id="backup" type="button">Unduh cadangan</button>
+        <label class="btn ghost" style="margin:0;font-weight:700;display:inline-flex;align-items:center">Pulihkan dari cadangan<input id="restore" type="file" accept=".json,application/json" hidden></label>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2 class="sec" style="font-size:20px">Mulai dari nol</h2>
+      <p class="note" style="margin-top:0">Menghapus semua kata dan riwayat belajar di browser ini.</p>
+      <div class="row"><button class="btn ghost" id="reset" type="button">Hapus semua data</button></div>
+    </div>
+  </section>
+</div>
+
+<nav aria-label="Menu">
+  <div class="in">
+    <button data-tab="study" aria-current="page"><span class="ic">📖</span>Belajar</button>
+    <button data-tab="add"><span class="ic">✍️</span>Tambah</button>
+    <button data-tab="cards"><span class="ic">🗂️</span>Kartu</button>
+    <button data-tab="settings"><span class="ic">⚙️</span>Pengaturan</button>
+  </div>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(() => {
+  const KEY = "kartu-kata-v1";
+  const MIN = 60 * 1000, DAY = 24 * 60 * MIN;
+
+  // ---------- Kata awal: Academic Word List sublist 1 ----------
+  const STARTER = [
+    ["analyse","menganalisis","Researchers analyse the data to find patterns."],
+    ["approach","pendekatan","This approach to learning works well for adults."],
+    ["area","bidang; wilayah","Artificial intelligence is a fast-growing area of research."],
+    ["assess","menilai","Teachers assess students' progress every term."],
+    ["assume","menganggap; berasumsi","Many people assume that technology always improves life."],
+    ["authority","otoritas; wewenang","Local authorities are responsible for public transport."],
+    ["available","tersedia","Free practice tests are available online."],
+    ["benefit","manfaat; menguntungkan","Regular exercise has many health benefits."],
+    ["concept","konsep","The concept of privacy has changed in the digital age."],
+    ["consist (of)","terdiri (dari)","The test consists of four sections."],
+    ["constitute","membentuk; merupakan","Young people constitute a large part of the population."],
+    ["context","konteks","Words can change meaning depending on the context."],
+    ["contract","kontrak","She signed a two-year contract with the company."],
+    ["create","menciptakan","The government aims to create more jobs."],
+    ["data","data","The data show a steady rise in internet use."],
+    ["define","mendefinisikan","It is difficult to define success."],
+    ["derive (from)","berasal (dari); memperoleh","Many English words are derived from Latin."],
+    ["distribute","mendistribusikan; membagikan","Food was distributed to families in need."],
+    ["economy","ekonomi","Tourism plays a key role in the local economy."],
+    ["environment","lingkungan","Plastic waste harms the environment."],
+    ["establish","mendirikan; menetapkan","The university was established in 1964."],
+    ["estimate","memperkirakan; perkiraan","Experts estimate that prices will rise by 5%."],
+    ["evident","jelas; nyata","It is evident that online learning is here to stay."],
+    ["export","ekspor; mengekspor","Indonesia exports coffee to many countries."],
+    ["factor","faktor","Cost is an important factor in choosing a university."],
+    ["finance","keuangan; membiayai","The project was financed by the government."],
+    ["formula","rumus","Scientists use a formula to calculate the risk."],
+    ["function","fungsi; berfungsi","The main function of a library is to provide information."],
+    ["identify","mengidentifikasi","The study identified three main causes of the problem."],
+    ["income","pendapatan","Household income has increased over the decade."],
+    ["indicate","menunjukkan","The results indicate a strong link between sleep and memory."],
+    ["individual","individu; perorangan","Each individual learns at a different pace."],
+    ["interpret","menafsirkan","Students must interpret the graph correctly."],
+    ["involve","melibatkan","The job involves a lot of travel."],
+    ["issue","masalah; isu","Climate change is a global issue."],
+    ["labour","tenaga kerja","Machines have replaced manual labour in many factories."],
+    ["legal","legal; hukum","Online gambling is not legal in many countries."],
+    ["legislation","undang-undang; peraturan","New legislation protects users' personal data."],
+    ["major","utama; besar","Traffic is a major problem in big cities."],
+    ["method","metode","This method produced more accurate results."],
+    ["occur","terjadi","Most accidents occur at night."],
+    ["percent","persen","Sixty percent of students passed the exam."],
+    ["period","periode; kurun waktu","Prices remained stable over the period."],
+    ["policy","kebijakan","The new policy reduced plastic use."],
+    ["principle","prinsip","Honesty is a basic principle of research."],
+    ["proceed","melanjutkan","After a short break, the meeting proceeded."],
+    ["process","proses; memproses","Learning a language is a slow process."],
+    ["require","membutuhkan; mewajibkan","Most universities require an English test."],
+    ["research","penelitian; meneliti","She is doing research on natural language processing."],
+    ["respond","merespons; menanggapi","The company responded quickly to complaints."],
+    ["role","peran","Parents play an important role in education."],
+    ["section","bagian","The reading section has three passages."],
+    ["sector","sektor","The technology sector is growing rapidly."],
+    ["significant","penting; signifikan","There was a significant increase in sales."],
+    ["similar","mirip; serupa","The two graphs show similar trends."],
+    ["source","sumber","Always check the source of the information."],
+    ["specific","spesifik; khusus","Give a specific example to support your idea."],
+    ["structure","struktur","A good essay has a clear structure."],
+    ["theory","teori","The theory was tested in several experiments."],
+    ["vary","bervariasi; berbeda-beda","Prices vary from one city to another."]
+  ];
+
+  // ---------- Storage ----------
+  const today = () => { const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+  const endOfToday = () => { const d = new Date(); d.setHours(23,59,59,999); return d.getTime(); };
+  const uid = () => Math.random().toString(36).slice(2,10) + Date.now().toString(36);
+  const newCard = (w,m,e) => ({ id: uid(), word: w.trim(), meaning: (m||"").trim(), example: (e||"").trim(),
+    state: "new", ease: 2.5, interval: 0, due: 0, lapses: 0, reps: 0, created: Date.now() });
+
+  let db;
+  function load(){
+    try { db = JSON.parse(localStorage.getItem(KEY)); } catch(e){ db = null; }
+    if (!db || !Array.isArray(db.cards)) {
+      db = { cards: STARTER.map(x => newCard(...x)), settings: { newPerDay: 15, voice: "en-GB" }, log: {} };
+      save();
+    }
+    db.settings = Object.assign({ newPerDay: 15, voice: "en-GB" }, db.settings || {});
+    db.log = db.log || {};
+  }
+  function save(){
+    try { localStorage.setItem(KEY, JSON.stringify(db)); }
+    catch(e){ toast("Gagal menyimpan. Penyimpanan browser penuh atau diblokir."); }
+  }
+  function dayLog(){ const t = today(); if (!db.log[t]) db.log[t] = { newSeen: 0, reviewed: 0 }; return db.log[t]; }
+
+  // ---------- Scheduling (spaced repetition, ala SM-2) ----------
+  function preview(c, r){
+    if (c.state === "new" || c.state === "learning"){
+      if (r === 1) return { label: "1 mnt", min: 1 };
+      if (r === 2) return { label: "6 mnt", min: 6 };
+      if (r === 3) return { label: "1 hari", days: 1 };
+      return { label: "4 hari", days: 4 };
+    }
+    const iv = Math.max(1, c.interval);
+    if (r === 1) return { label: "10 mnt", min: 10, lapse: true };
+    if (r === 2) { const d = Math.max(iv + 0, Math.round(iv * 1.2)); return { label: fmtDays(d), days: Math.max(1,d) }; }
+    if (r === 3) { const d = Math.max(iv + 1, Math.round(iv * c.ease)); return { label: fmtDays(d), days: d }; }
+    const d = Math.max(iv + 2, Math.round(iv * c.ease * 1.3)); return { label: fmtDays(d), days: d };
+  }
+  function fmtDays(d){ if (d < 30) return d + " hari"; if (d < 365) return Math.round(d/30) + " bln"; return (d/365).toFixed(1) + " thn"; }
+
+  function rate(c, r){
+    const p = preview(c, r), now = Date.now(), wasNew = c.state === "new";
+    if (p.min){
+      if (p.lapse){ c.lapses++; c.ease = Math.max(1.3, c.ease - 0.2); c.interval = 1; }
+      c.state = "learning"; c.due = now + p.min * MIN;
+    } else {
+      if (c.state === "review"){
+        if (r === 2) c.ease = Math.max(1.3, c.ease - 0.15);
+        if (r === 4) c.ease = c.ease + 0.15;
+      }
+      c.state = "review"; c.interval = p.days;
+      const d = new Date(); d.setHours(4,0,0,0); c.due = d.getTime() + p.days * DAY;
+    }
+    c.reps++;
+    const lg = dayLog();
+    if (wasNew) lg.newSeen++;
+    lg.reviewed++;
+    save();
+    return p;
+  }
+
+  // ---------- Study session ----------
+  let queue = [], current = null, revealed = false;
+
+  function buildQueue(){
+    const now = Date.now(), eod = endOfToday();
+    const learning = db.cards.filter(c => c.state === "learning").sort((a,b)=>a.due-b.due);
+    const review = db.cards.filter(c => c.state === "review" && c.due <= eod).sort((a,b)=>a.due-b.due);
+    const left = Math.max(0, db.settings.newPerDay - dayLog().newSeen);
+    const fresh = db.cards.filter(c => c.state === "new").sort((a,b)=>a.created-b.created).slice(0, left);
+    // selang-seling kata baru di antara ulangan
+    const mixed = [];
+    let i = 0, j = 0;
+    while (i < review.length || j < fresh.length){
+      if (i < review.length) mixed.push(review[i++]);
+      if (i < review.length) mixed.push(review[i++]);
+      if (j < fresh.length) mixed.push(fresh[j++]);
+    }
+    queue = [...learning.filter(c => c.due <= now), ...mixed, ...learning.filter(c => c.due > now)];
+  }
+
+  function counts(){
+    const ids = new Set(queue.map(c=>c.id));
+    if (current) ids.add(current.id);
+    let n=0,l=0,r=0;
+    db.cards.forEach(c => { if (!ids.has(c.id)) return; if (c.state==="new") n++; else if (c.state==="learning") l++; else r++; });
+    $("#c-new").textContent = n; $("#c-learn").textContent = l; $("#c-rev").textContent = r;
+  }
+
+  function nextCard(){
+    current = queue.shift() || null; revealed = false; renderStudy();
+  }
+
+  function renderStudy(){
+    counts(); renderStreak();
+    const area = $("#study-area");
+    if (!current){
+      const newLeft = db.cards.filter(c=>c.state==="new").length;
+      const doneToday = dayLog().reviewed > 0;
+      area.innerHTML = `<div class="done">
+        <div class="big">${doneToday ? "🌷" : "🌱"}</div>
+        <h2>${doneToday ? "Selesai untuk hari ini" : "Belum ada kartu untuk diulang"}</h2>
+        <p>${doneToday ? "Alhamdulillah. Kata-kata ini akan muncul lagi tepat saat hampir terlupa." : (newLeft ? "Kata baru hari ini sudah habis. Kembali lagi besok." : "Tambahkan kata baru di menu Tambah.")}</p>
+        <button class="btn soft" type="button" id="more-new">${newLeft ? "Tambah 5 kata baru lagi" : "Tambah kata"}</button>
+      </div>`;
+      $("#more-new").onclick = () => {
+        if (!newLeft) { switchTab("add"); return; }
+        const extra = db.cards.filter(c=>c.state==="new").sort((a,b)=>a.created-b.created).slice(0,5);
+        queue.push(...extra); nextCard();
+      };
+      return;
+    }
+    const c = current;
+    const tagText = c.state === "new" ? "Kata baru" : c.state === "learning" ? "Sedang dihafal" : "Ulangan";
+    area.innerHTML = `
+      <div class="card state-${c.state}" id="card" tabindex="0" role="button" aria-label="Kartu. Tekan untuk melihat arti.">
+        <span class="tag">${tagText}</span>
+        <button class="speak" type="button" id="speak" aria-label="Dengarkan pelafalan">🔊</button>
+        <div class="word">${esc(c.word)}</div>
+        ${revealed ? `<div class="back flip-in">
+            <p class="meaning">${esc(c.meaning)}</p>
+            ${c.example ? `<p class="example">${esc(c.example)}</p>` : ""}
+          </div>` : `<div class="hint">Ingat artinya dulu, lalu ketuk kartu</div>`}
+      </div>
+      ${revealed ? `<div class="rate">
+          ${[1,2,3,4].map(r => `<button class="r${r}" type="button" data-r="${r}">${["Lupa","Sulit","Bisa","Mudah"][r-1]}<small>${preview(c,r).label}</small></button>`).join("")}
+        </div>
+        <p class="kbd">Keyboard: 1 Lupa · 2 Sulit · 3 Bisa · 4 Mudah</p>`
+        : `<button class="btn showbtn" type="button" id="show">Lihat arti</button>
+           <p class="kbd">Keyboard: spasi untuk membalik kartu</p>`}`;
+    $("#speak").onclick = (e) => { e.stopPropagation(); speak(c.word, c.example && revealed ? c.example : ""); };
+    $("#card").onclick = () => { if (!revealed) reveal(); };
+    $("#card").onkeydown = (e) => { if ((e.key==="Enter") && !revealed){ e.preventDefault(); reveal(); } };
+    const sb = $("#show"); if (sb) sb.onclick = reveal;
+    document.querySelectorAll(".rate button").forEach(b => b.onclick = () => answer(+b.dataset.r));
+  }
+
+  function reveal(){ revealed = true; renderStudy(); }
+
+  function answer(r){
+    const c = current; const p = rate(c, r);
+    if (p.min){ // muncul lagi di sesi ini
+      const pos = Math.min(queue.length, r === 1 ? 3 : 6);
+      queue.splice(pos, 0, c);
+    }
+    nextCard();
+  }
+
+  function speak(word, sentence){
+    if (!("speechSynthesis" in window)) { toast("Browser ini belum mendukung suara."); return; }
+    speechSynthesis.cancel();
+    const say = (t) => { const u = new SpeechSynthesisUtterance(t); u.lang = db.settings.voice; u.rate = .92; speechSynthesis.speak(u); };
+    say(word.replace(/\(.*?\)/g,"")); if (sentence) say(sentence);
+  }
+
+  // ---------- Streak ----------
+  function renderStreak(){
+    let n = 0; const d = new Date();
+    const key = x => x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");
+    if (!(db.log[key(d)] && db.log[key(d)].reviewed)) d.setDate(d.getDate()-1);
+    while (db.log[key(d)] && db.log[key(d)].reviewed > 0){ n++; d.setDate(d.getDate()-1); }
+    $("#streak span").textContent = n + " hari";
+  }
+
+  // ---------- Add ----------
+  function exists(w){ const k = w.trim().toLowerCase(); return db.cards.some(c => c.word.toLowerCase() === k); }
+
+  $("#add-form").onsubmit = (e) => {
+    e.preventDefault();
+    const w = $("#f-word").value, m = $("#f-mean").value, ex = $("#f-ex").value;
+    if (!w.trim() || !m.trim()) return;
+    if (exists(w)) { toast(`"${w.trim()}" sudah ada di daftar.`); return; }
+    db.cards.push(newCard(w,m,ex)); save();
+    e.target.reset(); $("#f-word").focus();
+    toast(`"${w.trim()}" tersimpan.`);
+  };
+
+  function bulkAdd(text){
+    let added = 0, skipped = 0, bad = 0;
+    text.split(/\r?\n/).forEach(line => {
+      line = line.trim(); if (!line) return;
+      line = line.replace(/^\s*(\d+[.)]|[-*•])\s*/, "");
+      let parts = line.split(";");
+      if (parts.length < 2) parts = line.split("\t");
+      if (parts.length < 2) { bad++; return; }
+      const [w, m, ...rest] = parts.map(s => s.trim().replace(/^"|"$/g,""));
+      if (!w || !m) { bad++; return; }
+      if (exists(w)) { skipped++; return; }
+      db.cards.push(newCard(w, m, rest.join("; "))); added++;
+    });
+    save();
+    let msg = `${added} kata ditambahkan`;
+    if (skipped) msg += `, ${skipped} sudah ada`;
+    if (bad) msg += `, ${bad} baris formatnya salah`;
+    toast(msg + ".");
+    return added;
+  }
+  $("#bulk-add").onclick = () => { if (bulkAdd($("#bulk").value) >= 0) $("#bulk").value = ""; };
+  $("#bulk-file").onchange = (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    f.text().then(t => bulkAdd(t)); e.target.value = "";
+  };
+  $("#copy-prompt").onclick = () => {
+    const t = $("#prompt-text").textContent;
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject())
+      .then(() => toast("Prompt tersalin."))
+      .catch(() => toast("Tidak bisa menyalin otomatis. Blok dan salin manual, ya."));
+  };
+
+  // ---------- Card list ----------
+  function renderList(){
+    const q = ($("#search").value || "").toLowerCase();
+    const total = db.cards.length;
+    const master = db.cards.filter(c => c.state==="review" && c.interval >= 21).length;
+    const seen = db.cards.filter(c => c.state!=="new").length;
+    const due = db.cards.filter(c => c.state!=="new" && c.due <= endOfToday()).length;
+    $("#stats").innerHTML = `
+      <div><b>${total}</b><span>Total kata</span></div>
+      <div><b>${seen}</b><span>Sudah dipelajari</span></div>
+      <div><b>${master}</b><span>Dikuasai</span></div>
+      <div><b>${due}</b><span>Perlu diulang hari ini</span></div>`;
+    const rows = db.cards
+      .filter(c => !q || c.word.toLowerCase().includes(q) || c.meaning.toLowerCase().includes(q))
+      .sort((a,b) => a.word.localeCompare(b.word));
+    $("#list").innerHTML = rows.length ? rows.map(c => {
+      const cls = c.state==="review" && c.interval>=21 ? "master" : c.state;
+      const when = c.state==="new" ? "belum dipelajari" : "ulang " + new Date(c.due).toLocaleDateString("id-ID",{day:"numeric",month:"short"});
+      return `<li><div><div class="w"><span class="dot d-${cls}"></span>${esc(c.word)}</div>
+        <div class="m">${esc(c.meaning)} · ${when}</div></div>
+        <div class="acts"><button type="button" data-edit="${c.id}">Ubah</button><button type="button" data-del="${c.id}">Hapus</button></div></li>`;
+    }).join("") : `<li><div class="m">Tidak ada kata yang cocok.</div></li>`;
+    document.querySelectorAll("[data-del]").forEach(b => b.onclick = () => {
+      const c = db.cards.find(x => x.id === b.dataset.del);
+      if (!confirm(`Hapus "${c.word}"?`)) return;
+      db.cards = db.cards.filter(x => x.id !== c.id); save(); renderList(); toast(`"${c.word}" dihapus.`);
+    });
+    document.querySelectorAll("[data-edit]").forEach(b => b.onclick = () => {
+      const c = db.cards.find(x => x.id === b.dataset.edit);
+      const w = prompt("Kata:", c.word); if (w === null) return;
+      const m = prompt("Arti:", c.meaning); if (m === null) return;
+      const ex = prompt("Contoh kalimat:", c.example); if (ex === null) return;
+      c.word = w.trim() || c.word; c.meaning = m.trim() || c.meaning; c.example = ex.trim();
+      save(); renderList(); toast("Perubahan tersimpan.");
+    });
+  }
+  $("#search").oninput = renderList;
+
+  // ---------- Settings ----------
+  function renderSettings(){ $("#s-new").value = db.settings.newPerDay; $("#s-voice").value = db.settings.voice; }
+  $("#save-settings").onclick = () => {
+    const n = Math.min(100, Math.max(1, parseInt($("#s-new").value,10) || 15));
+    db.settings.newPerDay = n; db.settings.voice = $("#s-voice").value; save();
+    toast("Pengaturan tersimpan."); buildQueue(); nextCard();
+  };
+  $("#backup").onclick = () => {
+    const blob = new Blob([JSON.stringify(db, null, 1)], { type: "application/json" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+    a.download = `kartu-kata-cadangan-${today()}.json`; a.click(); URL.revokeObjectURL(a.href);
+    toast("Cadangan diunduh.");
+  };
+  $("#restore").onchange = (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    f.text().then(t => {
+      try {
+        const d = JSON.parse(t);
+        if (!Array.isArray(d.cards)) throw 0;
+        if (!confirm(`Ganti data di browser ini dengan cadangan berisi ${d.cards.length} kata?`)) return;
+        db = d; save(); load(); buildQueue(); nextCard(); renderSettings(); toast("Cadangan dipulihkan.");
+      } catch(err){ toast("File cadangan tidak dikenali. Pilih file .json dari tombol Unduh cadangan."); }
+    });
+    e.target.value = "";
+  };
+  $("#reset").onclick = () => {
+    if (!confirm("Hapus semua kata dan riwayat belajar? Ini tidak bisa dibatalkan.")) return;
+    try { localStorage.removeItem(KEY); } catch(e){}
+    load(); buildQueue(); nextCard(); toast("Data direset ke kata awal.");
+  };
+
+  // ---------- Tabs, keyboard, utils ----------
+  function switchTab(name){
+    document.querySelectorAll("nav button").forEach(b => {
+      if (b.dataset.tab === name) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current");
+    });
+    ["study","add","cards","settings"].forEach(t => $("#tab-"+t).hidden = t !== name);
+    if (name === "study"){ buildQueue(); nextCard(); }
+    if (name === "cards") renderList();
+    if (name === "settings") renderSettings();
+    window.scrollTo(0,0);
+  }
+  document.querySelectorAll("nav button").forEach(b => b.onclick = () => switchTab(b.dataset.tab));
+
+  document.addEventListener("keydown", (e) => {
+    if ($("#tab-study").hidden || !current) return;
+    if (/input|textarea|select/i.test(e.target.tagName)) return;
+    if (e.code === "Space" && !revealed){ e.preventDefault(); reveal(); }
+    else if (revealed && ["1","2","3","4"].includes(e.key)) answer(+e.key);
+  });
+
+  function $(s){ return document.querySelector(s); }
+  function esc(s){ return String(s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch])); }
+  let tt; function toast(m){ const t = $("#toast"); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(()=>t.hidden = true, 2600); }
+
+  load(); buildQueue(); nextCard();
+})();
+</script>
+</body>
+</html>
